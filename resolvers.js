@@ -9,6 +9,22 @@ const Query = {
   domains: () => db.domains.list(),
 };
 
+const Mutation = {
+  createUser: (root, { input }) => {
+    console.log(input);
+    const id = db.users.create(input);
+    return db.users.get(id);
+  },
+  createAccount: (root, { input }) => {
+    const id = db.accounts.create(input);
+    return db.accounts.get(id);
+  },
+  createDomain: (root, { input }) => {
+    const id = db.domains.create(input);
+    return db.domains.get(id);
+  },
+};
+
 const User = {
   accounts: (user) =>
     db.accounts.list().filter((account) => account.user_id === user.id),
@@ -24,4 +40,4 @@ const Domain = {
   account: (domain) => db.accounts.get(domain.account_id),
 };
 
-module.exports = { Query, User, Account, Domain };
+module.exports = { Query, Mutation, User, Account, Domain };
